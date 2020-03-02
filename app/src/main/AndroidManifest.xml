@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.getmeout">
 
+<!--    THIS IS THE ANDROID MANIFEST FILE. DO NOT PUT DEPENDENCIES HERE!!!   -->
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
