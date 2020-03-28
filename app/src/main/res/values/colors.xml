@@ -3,9 +3,10 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="theme_blue5">#003249</color>
-    <color name="theme_blue4">#007ea7</color>
-    <color name="theme_blue3">#80ced7</color>
-    <color name="theme_blue2">#9ad1d4</color>
-    <color name="theme_blue1">#ccdbdc</color>
+    <color name="theme_blue5">#022992</color>
+    <color name="theme_blue4">#0236C4</color>
+    <color name="theme_blue3">#0949FA</color>
+    <color name="theme_blue2">#205AF8</color>
+    <color name="theme_blue1">#4F7BF5</color>
+    <color name="white">#ffffff</color>
 </resources>
