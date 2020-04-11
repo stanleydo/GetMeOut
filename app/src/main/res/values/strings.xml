@@ -7,4 +7,17 @@
 
     <string name="settings_btn">Settings</string>
     <string name="send_btn">Send</string>
+
+    <!-- Settings Page -->
+    <string name="select_contacts_btn">Select Contacts</string>
+    <string name="send_location_btn">Send Location</string>
+    <string name="edit_messages_btn">Edit Messages</string>
+    <string name="fake_call_btn">Fake Call</string>
+
+    <!--Edit Contacts Page    -->
+    <string name="add">Add</string>
+    <string name="del">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="imp">Import</string>
+
 </resources>
