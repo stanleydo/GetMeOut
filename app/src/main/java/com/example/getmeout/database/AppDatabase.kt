@@ -7,7 +7,8 @@ import androidx.room.RoomDatabase
 
 @Database(entities = arrayOf(Contact::class), version = 1)
 abstract class AppDatabase : RoomDatabase() {
-    abstract val sleepDatabaseDao: ContactDao
+
+    abstract val ContactsDatabaseDao: ContactDao
 
     companion object {
 
@@ -22,7 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         AppDatabase::class.java,
-                        "sleep_history_database"
+                        "main-database"
                     )
                         .fallbackToDestructiveMigration()
                         .build()
