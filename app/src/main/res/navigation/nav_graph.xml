@@ -6,7 +6,7 @@
     app:startDestination="@id/title">
     <fragment
         android:id="@+id/title"
-        android:name="com.example.getmeout.Title"
+        android:name="com.example.getmeout.view.Title"
         android:label="fragment_title"
         tools:layout="@layout/fragment_title" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/settings"
-        android:name="com.example.getmeout.Settings"
+        android:name="com.example.getmeout.view.Settings"
         android:label="Settings" >
         <action
             android:id="@+id/action_settings_to_editContacts"
@@ -26,12 +26,12 @@
     </fragment>
     <fragment
         android:id="@+id/editMessages"
-        android:name="com.example.getmeout.EditMessages"
+        android:name="com.example.getmeout.view.EditMessages"
         android:label="fragment_edit_messages"
         tools:layout="@layout/fragment_edit_messages" />
     <fragment
         android:id="@+id/editContacts"
-        android:name="com.example.getmeout.EditContacts"
+        android:name="com.example.getmeout.view.EditContacts"
         android:label="fragment_edit_contacts"
         tools:layout="@layout/fragment_edit_contacts" />
 </navigation>

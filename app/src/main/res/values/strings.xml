@@ -20,4 +20,9 @@
     <string name="edit">Edit</string>
     <string name="imp">Import</string>
 
+    <!-- Placeholder strings  -->
+    <string name="fname">First</string>
+    <string name="lname">Last</string>
+    <string name="number">Number</string>
+
 </resources>

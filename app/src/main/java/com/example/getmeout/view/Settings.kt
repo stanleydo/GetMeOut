@@ -1,4 +1,4 @@
-package com.example.getmeout
+package com.example.getmeout.view
 
 
 import android.os.Bundle
@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
+import com.example.getmeout.R
+import com.example.getmeout.view.SettingsDirections
 import com.example.getmeout.databinding.FragmentSettingsBinding
 
 /**

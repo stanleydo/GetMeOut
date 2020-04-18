@@ -1,11 +1,6 @@
-package com.example.getmeout
+package com.example.getmeout.view
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,17 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.example.getmeout.database.AppDatabase
-import com.example.getmeout.database.Contact
+import com.example.getmeout.R
+import com.example.getmeout.adapters.ContactAdapter
+import com.example.getmeout.model.AppDatabase
+import com.example.getmeout.model.Contact
 import com.example.getmeout.databinding.FragmentEditContactsBinding
+import com.example.getmeout.viewmodel.ContactViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 // TODO - Add Recyclerview stuff
 
 class EditContacts : Fragment() {
+
+    private lateinit var contactViewModel: ContactViewModel
+    private val adapter = ContactAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +34,10 @@ class EditContacts : Fragment() {
         // Inflate the layout for this fragment
         val binding = DataBindingUtil.inflate<FragmentEditContactsBinding>(inflater,
             R.layout.fragment_edit_contacts,container,false)
+
+        val recyclerView = binding.contactsRecyclerview
+
+        recyclerView.adapter = adapter
 
         val db = Room.databaseBuilder(
             this.context!!, AppDatabase::class.java, "main-database").build()
@@ -53,12 +59,6 @@ class EditContacts : Fragment() {
         }
 
         binding.editContactBtn.setOnClickListener {
-            GlobalScope.launch {
-                for (contact in db.ContactsDatabaseDao.getAll()) {
-                    Log.e("ERROR", contact.firstName)
-                    quickToast(contact.firstName)
-                }
-            }
         }
 
         return binding.root

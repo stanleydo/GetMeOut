@@ -1,4 +1,4 @@
-package com.example.getmeout.database
+package com.example.getmeout.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

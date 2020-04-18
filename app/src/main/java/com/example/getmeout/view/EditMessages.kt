@@ -1,13 +1,12 @@
-package com.example.getmeout
+package com.example.getmeout.view
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import com.example.getmeout.R
 import com.example.getmeout.databinding.FragmentEditMessagesBinding
 
 // TODO - Add Recyclerview stuff

@@ -1,10 +1,9 @@
-package com.example.getmeout
+package com.example.getmeout.view
 
 
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.provider.Telephony
 import android.telephony.SmsManager
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -16,6 +15,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
+import com.example.getmeout.R
+import com.example.getmeout.view.TitleDirections
 import com.example.getmeout.databinding.FragmentTitleBinding
 
 /**

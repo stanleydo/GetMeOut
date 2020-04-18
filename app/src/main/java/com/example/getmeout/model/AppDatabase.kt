@@ -1,4 +1,4 @@
-package com.example.getmeout.database
+package com.example.getmeout.model
 
 import android.content.Context
 import androidx.room.Database
