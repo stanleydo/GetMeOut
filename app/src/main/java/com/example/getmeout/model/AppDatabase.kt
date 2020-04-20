@@ -6,10 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = arrayOf(Contact::class), version = 1)
+@Database(entities = arrayOf(Contact::class, Message::class), version = 2)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun ContactsDatabaseDao(): ContactDao
+    abstract fun MessagesDatabaseDao(): MessageDao
 
     companion object {
 
