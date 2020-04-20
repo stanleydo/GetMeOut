@@ -1,5 +1,6 @@
 package com.example.getmeout.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,37 +9,36 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.getmeout.R
 import com.example.getmeout.model.Contact
 import kotlinx.android.synthetic.main.contact_item.view.*
-import org.w3c.dom.Text
 
-class ContactAdapter : RecyclerView.Adapter<ContactAdapter.ContactHolder>() {
+class ContactAdapter internal constructor(context: Context) : RecyclerView.Adapter<ContactAdapter.ContactHolder>() {
 
+    private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var contacts: List<Contact> = ArrayList()
 
+    inner class ContactHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val firstName: TextView = itemView.item_firstname
+        val lastname: TextView = itemView.item_lastname
+        val phoneno: TextView = itemView.item_phoneno
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.contact_item, parent, false)
+        val itemView = inflater.inflate(R.layout.contact_item, parent, false)
         return ContactHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: ContactAdapter.ContactHolder, position: Int) {
-        val currentContact: Contact = contacts[position]
-        holder.item_firstname.text = currentContact.firstName
-        holder.item_lastname.text = currentContact.lastName
-        holder.item_phoneno.text = currentContact.phoneNumber
+    override fun onBindViewHolder(holder: ContactHolder, position: Int) {
+        val current = contacts[position]
+        holder.firstName.text = current.firstName
+        holder.lastname.text = current.lastName
+        holder.phoneno.text = current.phoneNumber
+    }
+
+    internal fun setContacts(contacts: List<Contact>) {
+        this.contacts = contacts
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
         return contacts.size
     }
-
-    fun setContacts(contacts: List<Contact>) {
-        this.contacts = contacts
-        notifyDataSetChanged()
-    }
-
-    inner class ContactHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var item_firstname: TextView = itemView.item_firstname
-        var item_lastname: TextView = itemView.item_lastname
-        var item_phoneno: TextView = itemView.item_phoneno
-    }
-
 }

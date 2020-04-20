@@ -4,11 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(entities = arrayOf(Contact::class), version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract val ContactsDatabaseDao: ContactDao
+    abstract fun ContactsDatabaseDao(): ContactDao
 
     companion object {
 
@@ -32,5 +33,6 @@ abstract class AppDatabase : RoomDatabase() {
                 return instance
             }
         }
+
     }
 }
