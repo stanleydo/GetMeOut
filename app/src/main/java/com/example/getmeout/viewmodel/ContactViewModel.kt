@@ -7,17 +7,20 @@ import androidx.lifecycle.viewModelScope
 import com.example.getmeout.model.AppDatabase
 import com.example.getmeout.model.Contact
 import com.example.getmeout.model.ContactRepository
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class ContactViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: ContactRepository
-    val allContacts: LiveData<List<Contact>>
 
     init {
         val dao = AppDatabase.getInstance(application).ContactsDatabaseDao()
         repository = ContactRepository(dao)
-        allContacts = repository.allContacts
+    }
+
+    fun getAll(): LiveData<List<Contact>> {
+        return repository.getAll()
     }
 
     fun insert(contact: Contact) {
@@ -30,6 +33,10 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
 
     fun deleteAllContacts() {
             repository.deleteAll()
+    }
+
+    fun getAllContacts_VALUES(): List<Contact> {
+        return repository.getAllContacts_VALUES()
     }
 
 }

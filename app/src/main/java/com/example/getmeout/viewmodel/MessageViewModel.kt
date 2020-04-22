@@ -10,12 +10,14 @@ import com.example.getmeout.model.MessageRepository
 class MessageViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: MessageRepository
-    val allMessages: LiveData<List<Message>>
 
     init {
         val dao = AppDatabase.getInstance(application).MessagesDatabaseDao()
         repository = MessageRepository(dao)
-        allMessages = repository.allContacts
+    }
+
+    fun getAll(): LiveData<List<Message>> {
+        return repository.getAll()
     }
 
     fun insert(message: Message) {
@@ -28,6 +30,10 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
 
     fun deleteAllMessages() {
         repository.deleteAll()
+    }
+
+    fun getAllMessage_VALUES(): List<Message> {
+        return repository.getAllMessage_VALUES()
     }
 
 }

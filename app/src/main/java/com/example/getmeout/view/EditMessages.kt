@@ -39,13 +39,10 @@ class EditMessages : Fragment() {
         recyclerView.adapter = messageAdapter
         recyclerView.layoutManager = LinearLayoutManager(this.context!!)
 
-        val db = Room.databaseBuilder(
-            this.context!!, AppDatabase::class.java, "main-database").build()
-
         val new_message: Message = Message(0,"HEY! IM HERE!")
 
         messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
-        messageViewModel.allMessages.observe(viewLifecycleOwner, Observer { messages -> messages?.let {messageAdapter.setMessages(it)}})
+        messageViewModel.getAll().observe(viewLifecycleOwner, Observer { messages -> messages?.let {messageAdapter.setMessages(it)}})
 
         binding.addMsg.setOnClickListener {
             GlobalScope.launch {

@@ -4,6 +4,8 @@ package com.example.getmeout.view
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Message
+import android.provider.Settings
 import android.telephony.SmsManager
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,10 +16,20 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.room.Room
 import com.example.getmeout.R
 import com.example.getmeout.view.TitleDirections
 import com.example.getmeout.databinding.FragmentTitleBinding
+import com.example.getmeout.model.AppDatabase
+import com.example.getmeout.model.Contact
+import com.example.getmeout.model.ContactDao
+import com.example.getmeout.viewmodel.ContactViewModel
+import com.example.getmeout.viewmodel.MessageViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.
@@ -29,6 +41,9 @@ class Title : Fragment() {
     // VAR means that the data is mutable, while VAL means that the data is NOT mutable.
     // You can statically type the variable using a colon : as show below.
     var MY_PERMISSIONS_REQUEST_SEND_SMS: Int = 0
+
+    private lateinit var contactViewModel: ContactViewModel
+    private lateinit var messageViewModel: MessageViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,12 +59,23 @@ class Title : Fragment() {
             view.findNavController().navigate(TitleDirections.actionTitleToSettings())
         }
 
-        // Initialize the SmsManager Object.
-        val smsManager = SmsManager.getDefault()
+        contactViewModel = ViewModelProvider(this).get(ContactViewModel::class.java)
+        messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
 
         binding.sendBtn.setOnClickListener {
-            // Call SendSMS to a random phone number. Pass in the smsManager.
-            sendSMS("1234567890", "u suk", smsManager)
+
+            GlobalScope.launch {
+                var all_contacts_values = contactViewModel.getAllContacts_VALUES()
+                var message = messageViewModel.getAllMessage_VALUES()[0].message
+
+                val smsManager = SmsManager.getDefault()
+                    for (contact in all_contacts_values) {
+                        sendSMS(contact.phoneNumber, message, smsManager = smsManager)
+                    }
+
+                }
+
+            Toast.makeText(this.context, "Sent!", Toast.LENGTH_SHORT).show()
         }
 
         return binding.root
@@ -67,8 +93,6 @@ class Title : Fragment() {
         } catch (ex: Exception) {
             // Log.e will show up as an Error in your logcat with the exception's message.
             Log.e("ERROR", ex.message)
-            // Toasts are small messages that pop up on the GUI.
-            Toast.makeText(this.context!!, "SMS Failed", Toast.LENGTH_SHORT)
         }
     }
 

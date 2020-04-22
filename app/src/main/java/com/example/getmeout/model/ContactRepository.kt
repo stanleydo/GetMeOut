@@ -7,7 +7,9 @@ import androidx.room.Dao
 
 class ContactRepository(private val contactDao: ContactDao) {
 
-    val allContacts: LiveData<List<Contact>> = contactDao.getAll()
+    fun getAll(): LiveData<List<Contact>> {
+        return contactDao.getAll()
+    }
 
     fun insert(contact: Contact) {
         contactDao.insertAll(contact)
@@ -20,6 +22,10 @@ class ContactRepository(private val contactDao: ContactDao) {
 
     fun deleteAll() {
         contactDao.deleteAll()
+    }
+
+    fun getAllContacts_VALUES(): List<Contact> {
+        return contactDao.getAllContacts()
     }
 
 }

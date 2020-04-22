@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 
 class MessageRepository(private val messageDao: MessageDao) {
 
-    val allContacts: LiveData<List<Message>> = messageDao.getAll()
+    fun getAll(): LiveData<List<Message>> {
+        return messageDao.getAll()
+    }
 
     fun insert(message: Message) {
         messageDao.insertAll(message)
@@ -17,6 +19,10 @@ class MessageRepository(private val messageDao: MessageDao) {
 
     fun deleteAll() {
         messageDao.deleteAll()
+    }
+
+    fun getAllMessage_VALUES(): List<Message> {
+        return messageDao.getAllMessages()
     }
 
 }

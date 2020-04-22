@@ -11,6 +11,9 @@ interface ContactDao {
     @Query("SELECT * FROM contacts_table")
     fun getAll(): LiveData<List<Contact>>
 
+    @Query("SELECT * FROM contacts_table ORDER BY uid DESC")
+    fun getAllContacts(): List<Contact>
+
     @Insert
     fun insertAll(vararg contacts: Contact)
 

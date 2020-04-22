@@ -22,6 +22,7 @@ import com.example.getmeout.model.Contact
 import com.example.getmeout.viewmodel.ContactViewModel
 import kotlinx.android.synthetic.main.fragment_title.view.*
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 // TODO - Add Recyclerview stuff
@@ -44,17 +45,18 @@ class EditContacts : Fragment() {
         recyclerView.adapter = contactAdapter
         recyclerView.layoutManager = LinearLayoutManager(this.context!!)
 
-        val db = Room.databaseBuilder(
-            this.context!!, AppDatabase::class.java, "main-database").build()
-
         val new_contact: Contact = Contact(uid=0, firstName = "Stanley", lastName = "Do", phoneNumber = "1234567890", selected = false)
+        val new_contact2: Contact = Contact(uid=0, firstName = "James", lastName = "Ochoa", phoneNumber = "16261231234", selected = false)
+        val new_contact3: Contact = Contact(uid=0, firstName = "Tom", lastName = "Whiskey", phoneNumber = "0987654321", selected = false)
 
         contactViewModel = ViewModelProvider(this).get(ContactViewModel::class.java)
-        contactViewModel.allContacts.observe(viewLifecycleOwner, Observer { contacts -> contacts?.let {contactAdapter.setContacts(it)}})
+        contactViewModel.getAll().observe(viewLifecycleOwner, Observer { contacts -> contacts?.let {contactAdapter.setContacts(it)}})
 
         binding.addContactBtn.setOnClickListener {
             GlobalScope.launch {
                 contactViewModel.insert(new_contact)
+                contactViewModel.insert(new_contact2)
+                contactViewModel.insert(new_contact3)
             }
         }
 

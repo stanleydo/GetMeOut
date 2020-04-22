@@ -11,6 +11,9 @@ interface MessageDao {
     @Query("SELECT * FROM messages_table")
     fun getAll(): LiveData<List<Message>>
 
+    @Query("SELECT * FROM messages_table ORDER BY uid DESC")
+    fun getAllMessages(): List<Message>
+
     @Insert
     fun insertAll(vararg messages: Message)
 
