@@ -65,7 +65,7 @@ class Title : Fragment() {
         binding.sendBtn.setOnClickListener {
 
             GlobalScope.launch {
-                var all_contacts_values = contactViewModel.getAllContacts_VALUES()
+                var all_contacts_values = contactViewModel.getAllSelected()
                 var message = messageViewModel.getAllMessage_VALUES()[0].message
 
                 val smsManager = SmsManager.getDefault()

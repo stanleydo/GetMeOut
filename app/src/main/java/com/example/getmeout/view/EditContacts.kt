@@ -1,7 +1,9 @@
 package com.example.getmeout.view
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +29,7 @@ import kotlinx.coroutines.launch
 
 // TODO - Add Recyclerview stuff
 
-class EditContacts : Fragment() {
+class EditContacts : Fragment(){
 
     private lateinit var contactViewModel: ContactViewModel
 //    private val adapter = ContactAdapter()
@@ -47,10 +49,16 @@ class EditContacts : Fragment() {
 
         val new_contact: Contact = Contact(uid=0, firstName = "Stanley", lastName = "Do", phoneNumber = "1234567890", selected = false)
         val new_contact2: Contact = Contact(uid=0, firstName = "James", lastName = "Ochoa", phoneNumber = "16261231234", selected = false)
-        val new_contact3: Contact = Contact(uid=0, firstName = "Tom", lastName = "Whiskey", phoneNumber = "0987654321", selected = false)
+        val new_contact3: Contact = Contact(uid=0, firstName = "Tom", lastName = "Whiskey", phoneNumber = "0987654321", selected = true)
 
         contactViewModel = ViewModelProvider(this).get(ContactViewModel::class.java)
         contactViewModel.getAll().observe(viewLifecycleOwner, Observer { contacts -> contacts?.let {contactAdapter.setContacts(it)}})
+
+        contactAdapter.onItemClick = {contact ->
+            GlobalScope.launch {
+                contactViewModel.update(!contact.selected, contact.uid)
+            }
+        }
 
         binding.addContactBtn.setOnClickListener {
             GlobalScope.launch {

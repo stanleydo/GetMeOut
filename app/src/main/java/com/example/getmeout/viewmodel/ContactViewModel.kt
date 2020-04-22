@@ -23,6 +23,10 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
         return repository.getAll()
     }
 
+    fun update(selected: Boolean, contact_uid: Int) {
+        repository.update(selected, contact_uid)
+    }
+
     fun insert(contact: Contact) {
             repository.insert(contact)
     }
@@ -37,6 +41,10 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
 
     fun getAllContacts_VALUES(): List<Contact> {
         return repository.getAllContacts_VALUES()
+    }
+
+    fun getAllSelected(): List<Contact> {
+        return repository.getAllSelected()
     }
 
 }

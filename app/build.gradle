@@ -49,6 +49,7 @@ dependencies {
     kapt 'com.android.databinding:compiler:3.5.3'
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation 'com.google.android.gms:play-services-location:11.6.0'
 
     def room_version = "2.2.5"
 

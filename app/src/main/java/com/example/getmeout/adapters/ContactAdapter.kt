@@ -1,6 +1,7 @@
 package com.example.getmeout.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +15,19 @@ class ContactAdapter internal constructor(context: Context) : RecyclerView.Adapt
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var contacts: List<Contact> = ArrayList()
+    val selected_color = "#008B00"
+    var onItemClick: ((Contact) -> Unit)? = null
 
     inner class ContactHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val firstName: TextView = itemView.item_firstname
         val lastname: TextView = itemView.item_lastname
         val phoneno: TextView = itemView.item_phoneno
+
+        init {
+            itemView.setOnClickListener {
+                onItemClick?.invoke(contacts[adapterPosition])
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolder {
@@ -31,6 +40,10 @@ class ContactAdapter internal constructor(context: Context) : RecyclerView.Adapt
         holder.firstName.text = current.firstName
         holder.lastname.text = current.lastName
         holder.phoneno.text = current.phoneNumber
+
+        if (current.selected) {
+            holder.itemView.setBackgroundColor(Color.parseColor(selected_color))
+        }
     }
 
     internal fun setContacts(contacts: List<Contact>) {
@@ -40,5 +53,9 @@ class ContactAdapter internal constructor(context: Context) : RecyclerView.Adapt
 
     override fun getItemCount(): Int {
         return contacts.size
+    }
+
+    interface OnContactListener {
+        fun onContactClick(position: Int)
     }
 }

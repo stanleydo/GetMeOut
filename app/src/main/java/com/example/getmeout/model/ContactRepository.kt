@@ -15,6 +15,10 @@ class ContactRepository(private val contactDao: ContactDao) {
         contactDao.insertAll(contact)
     }
 
+    fun update(selected: Boolean, contact_uid: Int) {
+        contactDao.update(selected, contact_uid)
+    }
+
     // TODO -- Delete via UID / PRI KEY
     fun delete(contact: Contact) {
         contactDao.delete(contact)
@@ -26,6 +30,10 @@ class ContactRepository(private val contactDao: ContactDao) {
 
     fun getAllContacts_VALUES(): List<Contact> {
         return contactDao.getAllContacts()
+    }
+
+    fun getAllSelected(): List<Contact> {
+        return contactDao.getAllSelected()
     }
 
 }
