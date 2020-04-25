@@ -5,7 +5,7 @@ import androidx.room.*
 
 @Dao
 interface ContactDao {
-    @Query("SELECT * FROM contacts_table ORDER BY selected DESC")
+    @Query("SELECT * FROM contacts_table ORDER BY uid ASC")
     fun getAll(): LiveData<List<Contact>>
 
     @Query("SELECT * FROM contacts_table ORDER BY uid DESC")
@@ -23,6 +23,12 @@ interface ContactDao {
     @Delete
     fun delete(vararg contact: Contact)
 
+    @Query("DELETE FROM contacts_table WHERE uid == :contact_id")
+    fun deleteByUid(contact_id: Int)
+
     @Query("DELETE FROM contacts_table")
     fun deleteAll()
+
+    @Query("UPDATE contacts_table SET first_name = :first_name, last_name = :last_name, phone_number = :phone_no WHERE uid == :contact_id")
+    fun updateContact(first_name: String, last_name: String, phone_no: String, contact_id: Int)
 }

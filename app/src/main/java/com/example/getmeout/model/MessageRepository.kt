@@ -25,4 +25,12 @@ class MessageRepository(private val messageDao: MessageDao) {
         return messageDao.getAllMessages()
     }
 
+    fun select( msg_id: Int) {
+        messageDao.select(msg_id)
+    }
+
+    fun getSelected(): List<Message>{
+        return messageDao.getSelected()
+    }
+
 }

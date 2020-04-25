@@ -13,9 +13,13 @@ import kotlinx.android.synthetic.main.contact_item.view.*
 
 class ContactAdapter internal constructor(context: Context) : RecyclerView.Adapter<ContactAdapter.ContactHolder>() {
 
+    final val bg_selected_color = "#0236C4"
+    final val bg_unselected_color = "#4F7BF5"
+    final val txt_selected_color = "#16FF16"
+    final val txt_unselected_color = "#A5A5A5"
+
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var contacts: List<Contact> = ArrayList()
-    val selected_color = "#008B00"
     var onItemClick: ((Contact) -> Unit)? = null
 
     inner class ContactHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -42,7 +46,15 @@ class ContactAdapter internal constructor(context: Context) : RecyclerView.Adapt
         holder.phoneno.text = current.phoneNumber
 
         if (current.selected) {
-            holder.itemView.setBackgroundColor(Color.parseColor(selected_color))
+            holder.itemView.setBackgroundColor(Color.parseColor(bg_selected_color))
+            holder.firstName.setTextColor(Color.parseColor(txt_selected_color))
+            holder.lastname.setTextColor(Color.parseColor(txt_selected_color))
+            holder.phoneno.setTextColor(Color.parseColor(txt_selected_color))
+        } else {
+            holder.itemView.setBackgroundColor(Color.parseColor(bg_unselected_color))
+            holder.firstName.setTextColor(Color.parseColor(txt_unselected_color))
+            holder.lastname.setTextColor(Color.parseColor(txt_unselected_color))
+            holder.phoneno.setTextColor(Color.parseColor(txt_unselected_color))
         }
     }
 
@@ -53,9 +65,5 @@ class ContactAdapter internal constructor(context: Context) : RecyclerView.Adapt
 
     override fun getItemCount(): Int {
         return contacts.size
-    }
-
-    interface OnContactListener {
-        fun onContactClick(position: Int)
     }
 }

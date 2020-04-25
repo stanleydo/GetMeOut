@@ -28,12 +28,20 @@ class ContactRepository(private val contactDao: ContactDao) {
         contactDao.deleteAll()
     }
 
+    fun deleteByUid(contact_uid: Int) {
+        contactDao.deleteByUid(contact_uid)
+    }
+
     fun getAllContacts_VALUES(): List<Contact> {
         return contactDao.getAllContacts()
     }
 
     fun getAllSelected(): List<Contact> {
         return contactDao.getAllSelected()
+    }
+
+    fun updateContact(first_name: String, last_name: String, phone_no: String, contact_id: Int) {
+        contactDao.updateContact(first_name, last_name, phone_no, contact_id)
     }
 
 }

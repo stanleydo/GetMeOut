@@ -36,4 +36,12 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
         return repository.getAllMessage_VALUES()
     }
 
+    fun select(msg_id: Int) {
+        repository.select(msg_id)
+    }
+
+    fun getSelected(): List<Message>{
+        return repository.getSelected()
+    }
+
 }

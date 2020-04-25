@@ -66,9 +66,9 @@ class Title : Fragment() {
 
             GlobalScope.launch {
                 var all_contacts_values = contactViewModel.getAllSelected()
-                var message = messageViewModel.getAllMessage_VALUES()[0].message
+                var message = messageViewModel.getAllMessage_VALUES()[0]
 
-                var final_message = message
+                var final_message = message.message
 
                 val smsManager = SmsManager.getDefault()
                     for (contact in all_contacts_values) {

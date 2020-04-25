@@ -22,4 +22,10 @@ interface MessageDao {
 
     @Query("DELETE FROM messages_table")
     fun deleteAll()
+
+    @Query("UPDATE messages_table SET selected = true WHERE uid == :msg_id")
+    fun select(msg_id: Int)
+
+    @Query("SELECT * FROM messages_table WHERE selected = 1")
+    fun getSelected(): List<Message>
 }

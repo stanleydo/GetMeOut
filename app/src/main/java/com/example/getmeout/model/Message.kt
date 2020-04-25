@@ -8,5 +8,7 @@ import androidx.room.PrimaryKey
 
 data class Message(
     @PrimaryKey(autoGenerate = true) val uid: Int,
-    @ColumnInfo(name = "message") var message: String
+    @ColumnInfo(name = "title") var title: String,
+    @ColumnInfo(name = "message") var message: String,
+    @ColumnInfo(name = "selected") var selected: Boolean
 )

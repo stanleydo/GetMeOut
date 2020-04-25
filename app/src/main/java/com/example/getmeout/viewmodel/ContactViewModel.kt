@@ -28,15 +28,19 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun insert(contact: Contact) {
-            repository.insert(contact)
+        repository.insert(contact)
     }
 
     fun delete(contact: Contact) {
-            repository.delete(contact)
+        repository.delete(contact)
     }
 
     fun deleteAllContacts() {
-            repository.deleteAll()
+        repository.deleteAll()
+    }
+
+    fun deleteByUid(uid: Int) {
+        repository.deleteByUid(uid)
     }
 
     fun getAllContacts_VALUES(): List<Contact> {
@@ -45,6 +49,10 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
 
     fun getAllSelected(): List<Contact> {
         return repository.getAllSelected()
+    }
+
+    fun updateContact(first_name: String, last_name: String, phone_no: String, contact_id: Int) {
+        return repository.updateContact(first_name, last_name, phone_no, contact_id)
     }
 
 }
