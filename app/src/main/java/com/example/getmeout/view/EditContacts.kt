@@ -26,6 +26,8 @@ import kotlinx.android.synthetic.main.fragment_title.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlin.random.Random
+import kotlin.random.Random.Default.nextInt
 
 // TODO - Add Recyclerview stuff
 
@@ -47,9 +49,20 @@ class EditContacts : Fragment(){
         recyclerView.adapter = contactAdapter
         recyclerView.layoutManager = LinearLayoutManager(this.context!!)
 
-        val new_contact: Contact = Contact(uid=0, firstName = "Stanley", lastName = "Do", phoneNumber = "1234567890", selected = false)
-        val new_contact2: Contact = Contact(uid=0, firstName = "James", lastName = "Ochoa", phoneNumber = "16261231234", selected = false)
+        // TODO -- REMOVE TEST CASES!!
+        val new_contact: Contact = Contact(uid=0, firstName = "Stanley", lastName = "Do", phoneNumber = "1234567890", selected = true)
+        val new_contact2: Contact = Contact(uid=0, firstName = "James", lastName = "Ochoa", phoneNumber = "16261231234", selected = true)
         val new_contact3: Contact = Contact(uid=0, firstName = "Tom", lastName = "Whiskey", phoneNumber = "0987654321", selected = true)
+
+        val ran_contacts: MutableList<Contact> = ArrayList()
+        var num_ran_contacts = 10
+
+        for (i in 0..num_ran_contacts) {
+            val random: Long = Random.nextLong(1000000000, 9999999999)
+            val ran_contact: Contact = Contact(uid=0, firstName ="Name"+i, lastName="LastName"+i, phoneNumber="1"+random, selected=true)
+            ran_contacts.add(ran_contact)
+        }
+        // TODO -- REMOVE TEST CASES!!
 
         contactViewModel = ViewModelProvider(this).get(ContactViewModel::class.java)
         contactViewModel.getAll().observe(viewLifecycleOwner, Observer { contacts -> contacts?.let {contactAdapter.setContacts(it)}})
@@ -65,6 +78,9 @@ class EditContacts : Fragment(){
                 contactViewModel.insert(new_contact)
                 contactViewModel.insert(new_contact2)
                 contactViewModel.insert(new_contact3)
+                for (contact in ran_contacts) {
+                    contactViewModel.insert(contact)
+                }
             }
         }
 

@@ -68,9 +68,11 @@ class Title : Fragment() {
                 var all_contacts_values = contactViewModel.getAllSelected()
                 var message = messageViewModel.getAllMessage_VALUES()[0].message
 
+                var final_message = message
+
                 val smsManager = SmsManager.getDefault()
                     for (contact in all_contacts_values) {
-                        sendSMS(contact.phoneNumber, message, smsManager = smsManager)
+                        sendSMS(contact.phoneNumber, final_message, smsManager = smsManager)
                     }
 
                 }
