@@ -1,10 +1,18 @@
 package com.example.getmeout.view
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
+import android.os.Looper
 import android.provider.Settings
 import android.provider.SyncStateContract.Helpers.insert
 import android.util.Log
@@ -15,6 +23,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.Nullable
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
@@ -28,6 +37,7 @@ import com.example.getmeout.databinding.FragmentEditContactsBinding
 import com.example.getmeout.model.AppDatabase
 import com.example.getmeout.model.Contact
 import com.example.getmeout.viewmodel.ContactViewModel
+import com.google.android.gms.location.*
 import kotlinx.android.synthetic.main.fragment_edit_contacts.*
 import kotlinx.android.synthetic.main.fragment_title.view.*
 import kotlinx.coroutines.GlobalScope
@@ -36,12 +46,9 @@ import kotlinx.coroutines.launch
 import kotlin.random.Random
 import kotlin.random.Random.Default.nextInt
 
-// TODO - Add Recyclerview stuff
-
 class EditContacts : Fragment(){
 
     private lateinit var contactViewModel: ContactViewModel
-//    private val adapter = ContactAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -129,6 +136,9 @@ class EditContacts : Fragment(){
             }
         }
 
+        binding.importContactsBtn.setOnClickListener {
+        }
+
         return binding.root
     }
 
@@ -212,7 +222,5 @@ class EditContacts : Fragment(){
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
-
-
 
 }
