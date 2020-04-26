@@ -15,17 +15,23 @@ interface MessageDao {
     fun getAllMessages(): List<Message>
 
     @Insert
-    fun insertAll(vararg messages: Message)
+    fun insertAll(vararg message: Message)
 
     @Delete
     fun delete(vararg message: Message)
 
+    @Query("DELETE FROM messages_table WHERE uid == :msg_id")
+    fun deleteByUid(msg_id: Int)
+
     @Query("DELETE FROM messages_table")
     fun deleteAll()
 
-    @Query("UPDATE messages_table SET selected = true WHERE uid == :msg_id")
+    @Query("UPDATE messages_table SET selected = CASE uid WHEN :msg_id THEN 1 ELSE 0 END")
     fun select(msg_id: Int)
 
     @Query("SELECT * FROM messages_table WHERE selected = 1")
     fun getSelected(): List<Message>
+
+    @Query("UPDATE messages_table SET title = :title, message = :message WHERE uid == :msg_id")
+    fun updateMessage(title: String, message: String, msg_id: Int)
 }

@@ -44,4 +44,12 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
         return repository.getSelected()
     }
 
+    fun deleteByUid(msg_id: Int) {
+        repository.deleteByUid(msg_id)
+    }
+
+    fun updateMessage(title: String, message: String, msg_id: Int) {
+        repository.updateMessage(title, message, msg_id)
+    }
+
 }

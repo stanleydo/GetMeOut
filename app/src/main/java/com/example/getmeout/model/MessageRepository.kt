@@ -33,4 +33,12 @@ class MessageRepository(private val messageDao: MessageDao) {
         return messageDao.getSelected()
     }
 
+    fun deleteByUid(msg_id: Int) {
+        messageDao.deleteByUid(msg_id)
+    }
+
+    fun updateMessage(title: String, message: String, msg_id: Int) {
+        messageDao.updateMessage(title, message, msg_id)
+    }
+
 }

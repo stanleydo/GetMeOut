@@ -1,13 +1,16 @@
 package com.example.getmeout.view
 
 import android.app.AlertDialog
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +22,7 @@ import com.example.getmeout.databinding.FragmentEditMessagesBinding
 import com.example.getmeout.model.AppDatabase
 import com.example.getmeout.model.Message
 import com.example.getmeout.viewmodel.MessageViewModel
+import kotlinx.android.synthetic.main.fragment_edit_messages.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -47,7 +51,10 @@ class EditMessages : Fragment() {
         messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
         messageViewModel.getAll().observe(viewLifecycleOwner, Observer { messages -> messages?.let {messageAdapter.setMessages(it)}})
 
-        messageAdapter.onItemClick = { message ->
+        var delete_on = false
+        var edit_on = false
+
+        messageAdapter.onItemClick = {message ->
             GlobalScope.launch {
                 messageViewModel.select(message.uid)
             }
@@ -58,9 +65,46 @@ class EditMessages : Fragment() {
         }
 
         binding.delBtn.setOnClickListener {
-            GlobalScope.launch {
-                messageViewModel.deleteAllMessages()
+            delete_on = !delete_on
+            edit_on = false
+
+            if (delete_on) {
+                del_btn.setTextColor(Color.parseColor("#ff0000"))
+                edit_btn.setTextColor(Color.parseColor("#ffffff"))
+                messageAdapter.onItemClick = { message ->
+                    GlobalScope.launch {
+                        messageViewModel.deleteByUid(message.uid)
+                    }
+                }
+            } else {
+                del_btn.setTextColor(Color.parseColor("#ffffff"))
+                messageAdapter.onItemClick = { message ->
+                    GlobalScope.launch {
+                        messageViewModel.select(message.uid)
+                    }
+                }
             }
+        }
+
+        binding.editBtn.setOnClickListener {
+            edit_on = !edit_on
+            delete_on = false
+
+            if (edit_on) {
+                edit_btn.setTextColor(Color.parseColor("#ff0000"))
+                del_btn.setTextColor(Color.parseColor("#ffffff"))
+                messageAdapter.onItemClick = { message ->
+                    editMessage(messageViewModel, message.title, message.message, message.uid)
+                }
+            } else {
+                edit_btn.setTextColor(Color.parseColor("#ffffff"))
+                messageAdapter.onItemClick = { message ->
+                    GlobalScope.launch {
+                        messageViewModel.select(message.uid)
+                    }
+                }
+            }
+
         }
 
         return binding.root
@@ -89,7 +133,7 @@ class EditMessages : Fragment() {
             val input_txt = msg_txt.text.toString()
 
             GlobalScope.launch {
-                messageViewModel.insert(Message(0, input_title, input_txt, true))
+                messageViewModel.insert(Message(0, input_title, input_txt, false))
             }
 
         }
@@ -97,6 +141,43 @@ class EditMessages : Fragment() {
         builder.setNeutralButton("Cancel") { _, _ ->
         }
 
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    fun editMessage(messageViewModel: MessageViewModel, pre_title:String, pre_message:String, msg_id: Int) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Edit Contact")
+
+        val title = EditText(context)
+        val msg = EditText(context)
+
+        title.hint = "First Name"
+        msg.hint = "Last Name"
+
+        title.setText(pre_title)
+        msg.setText(pre_message)
+
+        val linLayout: LinearLayout = LinearLayout(context)
+        linLayout.orientation = LinearLayout.VERTICAL
+
+        linLayout.addView(title)
+        linLayout.addView(msg)
+
+        builder.setView(linLayout)
+
+        builder.setPositiveButton("Save") { dialog, which ->
+            val input_title = title.text.toString()
+            val input_msg = msg.text.toString()
+
+            GlobalScope.launch {
+                messageViewModel.updateMessage(input_title, input_msg, msg_id)
+            }
+
+        }
+
+        builder.setNeutralButton("Cancel") { _, _ ->
+        }
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }

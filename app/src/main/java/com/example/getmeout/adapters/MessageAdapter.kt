@@ -25,7 +25,6 @@ class MessageAdapter internal constructor(context: Context) : RecyclerView.Adapt
     inner class MessageHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val msg_title: TextView = itemView.msg_title
         val msg_text: TextView = itemView.msg_txt
-        var onItemClick: ((Message) -> Unit)? = null
 
         init {
             itemView.setOnClickListener {
@@ -62,4 +61,6 @@ class MessageAdapter internal constructor(context: Context) : RecyclerView.Adapt
     override fun getItemCount(): Int {
         return messages.size
     }
+
+
 }

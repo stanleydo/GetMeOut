@@ -66,7 +66,7 @@ class Title : Fragment() {
 
             GlobalScope.launch {
                 var all_contacts_values = contactViewModel.getAllSelected()
-                var message = messageViewModel.getAllMessage_VALUES()[0]
+                var message = messageViewModel.getSelected()[0]
 
                 var final_message = message.message
 

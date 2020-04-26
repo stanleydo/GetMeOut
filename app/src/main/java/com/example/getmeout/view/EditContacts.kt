@@ -196,7 +196,7 @@ class EditContacts : Fragment(){
 
         builder.setView(linLayout)
 
-        builder.setPositiveButton("Add") { dialog, which ->
+        builder.setPositiveButton("Save") { dialog, which ->
             val input_fname = firstname.text.toString()
             val input_lname = lastname.text.toString()
             val input_phoneno = phoneno.text.toString()
