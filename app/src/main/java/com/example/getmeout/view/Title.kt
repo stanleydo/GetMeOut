@@ -96,6 +96,7 @@ class Title : Fragment() {
                     Thread.sleep(250)
                     timeout += 1
                 }
+
                 var final_message = message.message + "\n" + location_txt
 
                 val smsManager = SmsManager.getDefault()
@@ -184,23 +185,13 @@ class Title : Fragment() {
     // SAUL
     @SuppressLint("MissingPermission")
     private fun getLastLocation(){
-//        String variable to store location as a string
-        var locationString = "";
 
         if (checkPermissions()) {
             if (isLocationEnabled()) {
-
                 mFusedLocationClient.lastLocation.addOnCompleteListener(this.activity!!) { task ->
                     var location: Location? = task.result
-                    if (location == null) {
-                        requestNewLocationData()
-                    } else {
-//                        Add longitude, latitude to locationString
-                        locationString += "Latitude : " + location.latitude.toString() + "\n";
-                        locationString += " Longitude: " + location.longitude.toString();
-//                        println("checkPermissions: " + locationString);
-                        this.location_txt = locationString
-                    }
+                    requestNewLocationData()
+//
                 }
             } else {
                 Toast.makeText(this.context!!, "Turn on location", Toast.LENGTH_LONG).show()
@@ -233,13 +224,10 @@ class Title : Fragment() {
         override fun onLocationResult(locationResult: LocationResult) {
             var mLastLocation: Location = locationResult.lastLocation
 
-            locationString += "Latitude : " + mLastLocation.latitude.toString();
-            locationString += " Longitude: " + mLastLocation.longitude.toString();
-            println("onLocationResult: " + locationString);
+            val lat = mLastLocation.latitude.toString()
+            val long = mLastLocation.longitude.toString()
 
-            val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager;
-            val clip = ClipData.newPlainText("Location", locationString);
-            clipboard.setPrimaryClip(clip);
+            location_txt = "https://www.google.com/maps?q=${lat},${long}"
 
         }
     }
