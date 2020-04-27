@@ -1,6 +1,7 @@
 package com.example.getmeout.view
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -23,6 +25,7 @@ import com.example.getmeout.model.AppDatabase
 import com.example.getmeout.model.Message
 import com.example.getmeout.viewmodel.MessageViewModel
 import kotlinx.android.synthetic.main.fragment_edit_messages.*
+import kotlinx.android.synthetic.main.popup_msg.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -31,6 +34,8 @@ import kotlinx.coroutines.launch
 class EditMessages : Fragment() {
 
     private lateinit var messageViewModel: MessageViewModel
+    final val messageTitleError : String = "Invalid Title!"
+    final val messageError : String = "Invalid Message!"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -132,8 +137,14 @@ class EditMessages : Fragment() {
             val input_title = msg_title.text.toString()
             val input_txt = msg_txt.text.toString()
 
-            GlobalScope.launch {
-                messageViewModel.insert(Message(0, input_title, input_txt, false))
+            if (!checkTitle(input_title)) {
+                popupMessage("Error", messageTitleError)
+            } else if (!checkMessage(input_txt)) {
+                popupMessage("Error", messageError)
+            } else {
+                GlobalScope.launch {
+                    messageViewModel.insert(Message(0, input_title, input_txt, false))
+                }
             }
 
         }
@@ -170,8 +181,14 @@ class EditMessages : Fragment() {
             val input_title = title.text.toString()
             val input_msg = msg.text.toString()
 
-            GlobalScope.launch {
-                messageViewModel.updateMessage(input_title, input_msg, msg_id)
+            if (!checkTitle(input_title)) {
+                popupMessage("Error", messageTitleError)
+            } else if (!checkMessage(input_msg)) {
+                popupMessage("Error", messageError)
+            } else {
+                GlobalScope.launch {
+                    messageViewModel.updateMessage(input_title, input_msg, msg_id)
+                }
             }
 
         }
@@ -179,6 +196,35 @@ class EditMessages : Fragment() {
         builder.setNeutralButton("Cancel") { _, _ ->
         }
         val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun checkTitle(inputVal: String): Boolean{
+        var result = true
+        if(inputVal.length > 15 || inputVal.isBlank() || inputVal.isEmpty() ){
+            result = false
+        }
+        return result
+    }
+
+    private fun checkMessage(inputVal: String): Boolean{
+        var result = true
+        if(inputVal.length > 160 || inputVal.isBlank() || inputVal.isEmpty() ){
+            result = false
+        }
+        return result
+    }
+
+    private fun popupMessage(title: String, msg: String) {
+        val dialog: Dialog = Dialog(context!!)
+        dialog.setContentView(R.layout.popup_msg)
+
+        val titletv: TextView = dialog.popup_title
+        val msgtv: TextView = dialog.popup_msg
+
+        titletv.setText(title)
+        msgtv.setText(msg)
+
         dialog.show()
     }
 

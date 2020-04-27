@@ -2,6 +2,7 @@ package com.example.getmeout.view
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.ContentValues.TAG
@@ -21,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
@@ -40,6 +42,7 @@ import com.example.getmeout.viewmodel.ContactViewModel
 import com.google.android.gms.location.*
 import kotlinx.android.synthetic.main.fragment_edit_contacts.*
 import kotlinx.android.synthetic.main.fragment_title.view.*
+import kotlinx.android.synthetic.main.popup_msg.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -49,6 +52,10 @@ import kotlin.random.Random.Default.nextInt
 class EditContacts : Fragment(){
 
     private lateinit var contactViewModel: ContactViewModel
+
+    final val firstNameError : String = "Invalid First Name!"
+    final val lastNameError : String = "Invalid Last Name!"
+    final val phoneNumberError : String = "Invalid Phone Number!"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -168,8 +175,16 @@ class EditContacts : Fragment(){
             val input_lname = lastname.text.toString()
             val input_phoneno = phoneno.text.toString()
 
-            GlobalScope.launch {
-                contactViewModel.insert(Contact(0, input_fname, input_lname, input_phoneno, false))
+            if (!checkFirstName(input_fname)) {
+                popupMessage("Error", firstNameError)
+            } else if (!checkLastName(input_fname)) {
+                popupMessage("Error", lastNameError)
+            } else if (!checkPhoneNum(input_fname)) {
+                popupMessage("Error", phoneNumberError)
+            } else {
+                GlobalScope.launch {
+                    contactViewModel.insert(Contact(0, input_fname, input_lname, input_phoneno, false))
+                }
             }
 
         }
@@ -211,8 +226,16 @@ class EditContacts : Fragment(){
             val input_lname = lastname.text.toString()
             val input_phoneno = phoneno.text.toString()
 
-            GlobalScope.launch {
-                contactViewModel.updateContact(input_fname, input_lname, input_phoneno, contact_id)
+            if (!checkFirstName(input_fname)) {
+                popupMessage("Error", firstNameError)
+            } else if (!checkLastName(input_fname)) {
+                popupMessage("Error", lastNameError)
+            } else if (!checkPhoneNum(input_fname)) {
+                popupMessage("Error", phoneNumberError)
+            } else {
+                GlobalScope.launch {
+                    contactViewModel.updateContact(input_fname, input_lname, input_phoneno, contact_id)
+                }
             }
 
         }
@@ -220,6 +243,52 @@ class EditContacts : Fragment(){
         builder.setNeutralButton("Cancel") { _, _ ->
         }
         val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun checkFirstName(inputVal: String): Boolean{
+        var result = true
+        if(inputVal.length > 15 || inputVal.isBlank() || inputVal.isEmpty() ){
+            result = false
+        }
+        return result
+    }
+
+    private fun checkLastName(inputVal: String): Boolean{
+        var result = true
+        if(inputVal.length > 15 || inputVal.isBlank() || inputVal.isEmpty() ){
+            result = false
+        }
+        return result
+    }
+
+    private fun checkPhoneNum(inputVal: String): Boolean{
+        var numeric = true
+
+        if(inputVal.length in 6..15 && !inputVal.isBlank() && inputVal.isNotEmpty()) {
+            try {
+                val num = inputVal.toInt()
+            }
+            catch (e: NumberFormatException) {
+                numeric = false
+            }
+        }
+        else {
+            numeric = false
+        }
+        return numeric
+    }
+
+    private fun popupMessage(title: String, msg: String) {
+        val dialog: Dialog = Dialog(context!!)
+        dialog.setContentView(R.layout.popup_msg)
+
+        val titletv: TextView = dialog.popup_title
+        val msgtv: TextView = dialog.popup_msg
+
+        titletv.setText(title)
+        msgtv.setText(msg)
+
         dialog.show()
     }
 

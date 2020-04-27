@@ -9,6 +9,7 @@
     <color name="theme_blue2">#205AF8</color>
     <color name="theme_blue1">#4F7BF5</color>
     <color name="white">#ffffff</color>
+    <color name="red">#FF0000</color>
 
     <color name="selected_green">#008B00</color>
 </resources>
