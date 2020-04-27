@@ -177,9 +177,9 @@ class EditContacts : Fragment(){
 
             if (!checkFirstName(input_fname)) {
                 popupMessage("Error", firstNameError)
-            } else if (!checkLastName(input_fname)) {
+            } else if (!checkLastName(input_lname)) {
                 popupMessage("Error", lastNameError)
-            } else if (!checkPhoneNum(input_fname)) {
+            } else if (!checkPhoneNum(input_phoneno)) {
                 popupMessage("Error", phoneNumberError)
             } else {
                 GlobalScope.launch {
@@ -228,9 +228,9 @@ class EditContacts : Fragment(){
 
             if (!checkFirstName(input_fname)) {
                 popupMessage("Error", firstNameError)
-            } else if (!checkLastName(input_fname)) {
+            } else if (!checkLastName(input_lname)) {
                 popupMessage("Error", lastNameError)
-            } else if (!checkPhoneNum(input_fname)) {
+            } else if (!checkPhoneNum(input_phoneno)) {
                 popupMessage("Error", phoneNumberError)
             } else {
                 GlobalScope.launch {
