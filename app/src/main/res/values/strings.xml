@@ -5,13 +5,16 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="this_is_settings">this is the settings page</string>
 
-    <string name="settings_btn">Settings</string>
-    <string name="send_btn">Send</string>
+    <!-- Title    -->
+    <string name="gmo">GET ME OUT</string>
+
+    <string name="settings_btn">SETTINGS</string>
+    <string name="send_btn">SEND</string>
 
     <!-- Settings Page -->
-    <string name="select_contacts_btn">Select Contacts</string>
-    <string name="send_location_btn">Send Location</string>
-    <string name="edit_messages_btn">Edit Messages</string>
+    <string name="select_contacts_btn">CONTACTS</string>
+    <string name="send_location_btn">LOCATION</string>
+    <string name="edit_messages_btn">MESSAGES</string>
     <string name="fake_call_btn">Fake Call</string>
 
     <!--Edit Contacts Page    -->
