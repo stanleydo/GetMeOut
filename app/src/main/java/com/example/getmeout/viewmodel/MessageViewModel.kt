@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.getmeout.model.AppDatabase
 import com.example.getmeout.model.Message
-import com.example.getmeout.model.MessageRepository
+import com.example.getmeout.repositories.MessageRepository
 
 class MessageViewModel(application: Application) : AndroidViewModel(application) {
 

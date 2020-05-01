@@ -1,9 +1,8 @@
-package com.example.getmeout.model
+package com.example.getmeout.repositories
 
-import android.app.Application
-import android.os.AsyncTask
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
+import com.example.getmeout.model.Contact
+import com.example.getmeout.model.ContactDao
 
 class ContactRepository(private val contactDao: ContactDao) {
 

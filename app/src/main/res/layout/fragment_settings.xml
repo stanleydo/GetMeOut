@@ -47,8 +47,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="96dp"
-            android:paddingLeft="100dp"
-            android:paddingRight="100dp"
+            android:paddingLeft="70dp"
+            android:paddingRight="70dp"
             android:drawableEnd="@drawable/ic_location_on_white_36dp"/>
 
     </LinearLayout>

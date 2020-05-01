@@ -3,12 +3,9 @@ package com.example.getmeout.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
 import com.example.getmeout.model.AppDatabase
 import com.example.getmeout.model.Contact
-import com.example.getmeout.model.ContactRepository
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.example.getmeout.repositories.ContactRepository
 
 class ContactViewModel(application: Application) : AndroidViewModel(application) {
 

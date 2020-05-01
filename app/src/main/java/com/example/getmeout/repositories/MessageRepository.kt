@@ -1,6 +1,8 @@
-package com.example.getmeout.model
+package com.example.getmeout.repositories
 
 import androidx.lifecycle.LiveData
+import com.example.getmeout.model.Message
+import com.example.getmeout.model.MessageDao
 
 class MessageRepository(private val messageDao: MessageDao) {
 

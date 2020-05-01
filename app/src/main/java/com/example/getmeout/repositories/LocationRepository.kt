@@ -1,6 +1,8 @@
-package com.example.getmeout.model
+package com.example.getmeout.repositories
 
 import androidx.lifecycle.LiveData
+import com.example.getmeout.model.Location
+import com.example.getmeout.model.LocationDao
 
 class LocationRepository (private val locationDao: LocationDao) {
 
