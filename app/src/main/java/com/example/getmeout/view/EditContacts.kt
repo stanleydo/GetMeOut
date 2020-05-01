@@ -244,7 +244,7 @@ class EditContacts : Fragment(){
 
         if(inputVal.length in 6..15 && !inputVal.isBlank() && inputVal.isNotEmpty()) {
             try {
-                val num = inputVal.toInt()
+                val num = inputVal.toLong()
             }
             catch (e: NumberFormatException) {
                 numeric = false
