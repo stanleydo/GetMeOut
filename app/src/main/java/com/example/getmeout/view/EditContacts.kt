@@ -1,15 +1,24 @@
 package com.example.getmeout.view
 
+import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.ContentResolver
+import android.content.pm.PackageManager
+import android.database.Cursor
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.ContactsContract
+import android.provider.ContactsContract.Contacts.CONTENT_LOOKUP_URI
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentResolverCompat
+import androidx.core.content.ContentResolverCompat.query
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -33,6 +42,7 @@ class EditContacts : Fragment(){
     final val firstNameError : String = "Invalid First Name!"
     final val lastNameError : String = "Invalid Last Name!"
     final val phoneNumberError : String = "Invalid Phone Number!"
+    var MY_PERMISSIONS_REQUEST_READ_CONTACTS: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -120,10 +130,44 @@ class EditContacts : Fragment(){
             }
         }
 
+        val contactsContract = ContactsContract()
+
         binding.importContactsBtn.setOnClickListener {
+            if (!checkContactsPermissions()) {
+                requestContactsPermissions()
+            } else {
+                importContacts()
+            }
         }
 
         return binding.root
+    }
+
+    fun importContacts() {
+        var contentResolver = this.context!!.contentResolver
+        var cursor: Cursor? = contentResolver.query(
+            ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null, null)
+        var numLoops = 0
+        while (!cursor!!.isLast) {
+            cursor.moveToNext()
+
+            var name = ""
+            var number = ""
+
+            if (cursor.getString(5) != null && cursor.getString(50) != null) {
+                name = cursor.getString(5)
+                number = cursor.getString(50).replace(Regex("""[- ]"""), "")
+                GlobalScope.launch {
+                    contactViewModel.insert(Contact(0, name, "", number, false))
+                }
+            }
+        }
+        // TEST LOOP FOR COLUMN NAMES.
+        /*
+        for (i in 0..cursor!!.columnCount-1) {
+            Log.e("ERROR", "NAME: " + name + " i: "+ i + " " + cursor.getString(i) + " " + cursor.getColumnName(i))
+        }
+        */
     }
 
     fun addContact(contactViewModel: ContactViewModel) {
@@ -267,6 +311,55 @@ class EditContacts : Fragment(){
         msgtv.setText(msg)
 
         dialog.show()
+    }
+
+    // Checks to see if the you have the SEND_SMS Permission.
+    // This will return TRUE if permission has been granted.
+    fun checkContactsPermissions(): Boolean {
+        return (ContextCompat.checkSelfPermission(this.context!!, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED)
+    }
+
+    // This method requests the permission for SEND_SMS
+    fun requestContactsPermissions() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this.activity!!,
+                Manifest.permission.READ_CONTACTS)) {
+            // Show an explanation to the user *asynchronously* -- don't block
+            // this thread waiting for the user's response! After the user
+            // sees the explanation, try again to request the permission.
+        } else {
+            // No explanation needed, we can request the permission.
+            ActivityCompat.requestPermissions(this.activity!!,
+                arrayOf(Manifest.permission.READ_CONTACTS),
+                MY_PERMISSIONS_REQUEST_READ_CONTACTS)
+
+            // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+            // app-defined int constant. The callback method gets the
+            // result of the request.
+        }
+    }
+
+    // This method is called when the user responds to the permission request.
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            MY_PERMISSIONS_REQUEST_READ_CONTACTS -> {
+                // If request is cancelled, the result arrays are empty.
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return
+            }
+
+            // Add other 'when' lines to check for other
+            // permissions this app might request.
+            else -> {
+                // Ignore all other requests.
+            }
+        }
     }
 
 }
