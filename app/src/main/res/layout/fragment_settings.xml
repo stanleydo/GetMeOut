@@ -18,7 +18,10 @@
             android:fontFamily="sans-serif-condensed-light"
             android:text="@string/select_contacts_btn"
             android:textColor="#FFFFFF"
-            android:textSize="36sp"/>
+            android:textSize="36sp"
+            android:paddingLeft="70dp"
+            android:paddingRight="70dp"
+            android:drawableEnd="@drawable/ic_person_white_36dp"/>
 
         <Button
             android:id="@+id/edit_messages_btn"
@@ -32,14 +35,17 @@
             android:textSize="36sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="48dp" />
+            tools:layout_editor_absoluteY="48dp"
+            android:paddingLeft="70dp"
+            android:paddingRight="70dp"
+            android:drawableEnd="@drawable/ic_message_white_36dp"/>
 
         <Button
             android:id="@+id/location_btn"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@drawable/gradient_btn"
+            android:background="@drawable/transition"
             android:fontFamily="sans-serif-condensed-light"
             android:text="@string/send_location_btn"
             android:textColor="#FFFFFF"

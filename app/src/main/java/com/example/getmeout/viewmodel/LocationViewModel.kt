@@ -20,8 +20,8 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
         return repository.getLocation()
     }
 
-    fun getLocation_value(): Location {
-        return repository.getLocation_value()[0]
+    fun getLocation_value(): List<Location> {
+        return repository.getLocation_value()
     }
 
     fun updateLocation() {

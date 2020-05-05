@@ -40,10 +40,6 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
         repository.deleteByUid(uid)
     }
 
-    fun getAllContacts_VALUES(): List<Contact> {
-        return repository.getAllContacts_VALUES()
-    }
-
     fun getAllSelected(): List<Contact> {
         return repository.getAllSelected()
     }

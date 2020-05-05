@@ -31,44 +31,48 @@
 
             <Button
                 android:id="@+id/add_contact_btn"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/custom_buttom"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/add"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
             <Button
                 android:id="@+id/del_contact_btn"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/custom_buttom"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/del"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
             <Button
                 android:id="@+id/edit_contact_btn"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/custom_buttom"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/edit"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
             <Button
                 android:id="@+id/import_contacts_btn"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/custom_buttom"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/imp"
                 android:textColor="@color/white"
                 android:textSize="18sp" />

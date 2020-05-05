@@ -29,8 +29,6 @@ import kotlinx.android.synthetic.main.popup_msg.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-// TODO - Add Recyclerview stuff
-
 class EditMessages : Fragment() {
 
     private lateinit var messageViewModel: MessageViewModel
@@ -50,8 +48,6 @@ class EditMessages : Fragment() {
         val messageAdapter = MessageAdapter(this.context!!)
         recyclerView.adapter = messageAdapter
         recyclerView.layoutManager = LinearLayoutManager(this.context!!)
-
-        val new_message: Message = Message(0,"SOS #1","HEY! IM HERE!", false)
 
         messageViewModel = ViewModelProvider(this).get(MessageViewModel::class.java)
         messageViewModel.getAll().observe(viewLifecycleOwner, Observer { messages -> messages?.let {messageAdapter.setMessages(it)}})

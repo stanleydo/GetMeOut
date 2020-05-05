@@ -32,10 +32,6 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
         repository.deleteAll()
     }
 
-    fun getAllMessage_VALUES(): List<Message> {
-        return repository.getAllMessage_VALUES()
-    }
-
     fun select(msg_id: Int) {
         repository.select(msg_id)
     }

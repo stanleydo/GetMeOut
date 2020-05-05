@@ -60,21 +60,6 @@ class EditContacts : Fragment(){
         var delete_on = false
         var edit_on = false
 
-        // TODO -- REMOVE TEST CASES!!
-        val new_contact: Contact = Contact(uid=0, firstName = "Stanley", lastName = "Do", phoneNumber = "1234567890", selected = true)
-        val new_contact2: Contact = Contact(uid=0, firstName = "James", lastName = "Ochoa", phoneNumber = "16261231234", selected = true)
-        val new_contact3: Contact = Contact(uid=0, firstName = "Tom", lastName = "Whiskey", phoneNumber = "0987654321", selected = true)
-
-        val ran_contacts: MutableList<Contact> = ArrayList()
-        var num_ran_contacts = 10
-
-        for (i in 0..num_ran_contacts) {
-            val random: Long = Random.nextLong(1000000000, 9999999999)
-            val ran_contact: Contact = Contact(uid=0, firstName ="Name"+i, lastName="LastName"+i, phoneNumber="1"+random, selected=true)
-            ran_contacts.add(ran_contact)
-        }
-        // TODO -- REMOVE TEST CASES!!
-
         contactViewModel = ViewModelProvider(this).get(ContactViewModel::class.java)
         contactViewModel.getAll().observe(viewLifecycleOwner, Observer { contacts -> contacts?.let {contactAdapter.setContacts(it)}})
 
@@ -148,20 +133,30 @@ class EditContacts : Fragment(){
         var cursor: Cursor? = contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null, null)
         var numLoops = 0
+
         while (!cursor!!.isLast) {
             cursor.moveToNext()
 
             var name = ""
             var number = ""
 
-            if (cursor.getString(5) != null && cursor.getString(50) != null) {
-                name = cursor.getString(5)
-                number = cursor.getString(50).replace(Regex("""[- ]"""), "")
-                GlobalScope.launch {
-                    contactViewModel.insert(Contact(0, name, "", number, false))
+            if (cursor.isNull(5)) {
+                return
+            }
+
+            try {
+                if (cursor.getString(5) != null && cursor.getString(50) != null) {
+                    name = cursor.getString(5)
+                    number = cursor.getString(50).replace(Regex("""[- ]"""), "")
+                    GlobalScope.launch {
+                        contactViewModel.insert(Contact(0, name, "", number, false))
+                    }
                 }
+            } finally {
+                cursor.close()
             }
         }
+
         // TEST LOOP FOR COLUMN NAMES.
         /*
         for (i in 0..cursor!!.columnCount-1) {
@@ -345,11 +340,7 @@ class EditContacts : Fragment(){
             MY_PERMISSIONS_REQUEST_READ_CONTACTS -> {
                 // If request is cancelled, the result arrays are empty.
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    // permission was granted
                 }
                 return
             }

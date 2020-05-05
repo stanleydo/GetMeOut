@@ -3,6 +3,7 @@ package com.example.getmeout.view
 
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -36,26 +37,37 @@ class Settings : Fragment() {
             R.layout.fragment_settings,container,false)
         // Inflate the layout for this fragment
 
+        // Initialize the drawables from res/drawable
         var loc_on_drawable: Drawable? = this.context!!.getDrawable(R.drawable.ic_location_on_white_36dp)
         var loc_off_drawable: Drawable? = this.context!!.getDrawable(R.drawable.ic_location_off_white_36dp)
 
+        // Initialize the location view model to access the location flag
         val locationViewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
+
+        // We can observe changes in the database and make actions as it happens.
         locationViewModel.getAll().observe(viewLifecycleOwner, Observer {
+            // This checks if there's any location entry at all.
+            // If there is, then we can assign "location_on" to the data value.
             if (it.isNotEmpty()) {
+                // It refers to the list of locations we get from the observer.
+                // We use it[0] because we always know that we will have only a single entry in the Locations DB.
+                location_on = it[0].status
             } else {
+                // If there isn't anything in the locations DB, let's make an entry.
                 GlobalScope.launch {
                     locationViewModel.insert(Location(1, false))
                 }
             }
 
-            if (it[0].status) {
+            // This handles GUI changes based off of the entry.
+            if (location_on) {
                 binding.locationBtn.setText("LOCATION ON")
                 binding.locationBtn.setCompoundDrawablesWithIntrinsicBounds(null, null, loc_on_drawable, null)
-                binding.locationBtn.setBackground(this.context!!.getDrawable(R.drawable.gradient_btn_on))
+                binding.locationBtn.background = this.context!!.getDrawable(R.drawable.gradient_btn_on)
             } else {
                 binding.locationBtn.setText("LOCATION OFF")
                 binding.locationBtn.setCompoundDrawablesWithIntrinsicBounds(null, null, loc_off_drawable, null)
-                binding.locationBtn.setBackground(this.context!!.getDrawable(R.drawable.gradient_btn_off))
+                binding.locationBtn.background = this.context!!.getDrawable(R.drawable.gradient_btn_off)
             }
         })
 
@@ -70,6 +82,7 @@ class Settings : Fragment() {
             view.findNavController().navigate(SettingsDirections.actionSettingsToEditMessages())
         }
 
+        // UpdateLocation basically just reverses the status of the single location entry.
         binding.locationBtn.setOnClickListener {
             GlobalScope.launch {
                 locationViewModel.updateLocation()

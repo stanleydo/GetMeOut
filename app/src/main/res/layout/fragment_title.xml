@@ -33,7 +33,8 @@
                 android:textColor="@color/white"
                 android:textSize="48sp"
                 tools:layout_editor_absoluteX="166dp"
-                tools:layout_editor_absoluteY="404dp" />
+                tools:layout_editor_absoluteY="404dp"
+                />
 
             <Button
                 android:id="@+id/send_btn"
