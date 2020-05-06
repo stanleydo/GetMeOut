@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/alegreya_sans_sc</item>
+        <item>@font/cousine</item>
         <item>@font/droid_sans</item>
+        <item>@font/ubuntu</item>
     </array>
 </resources>

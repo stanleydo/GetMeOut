@@ -93,9 +93,11 @@ class Title : Fragment() {
         // I'm not good enough with coroutines yet, so this will be a TODO.
         // A blocking coroutine which blocks the main thread until the jobs are completed
         fun send() = runBlocking {
+            location_txt = ""
+            getLastLocation()
 
             // Since we can not access the DB on the main thread,
-            val job = GlobalScope.launch{
+            val job = GlobalScope.launch {
                 var all_contacts_values: List<Contact> = contactViewModel.getAllSelected()
                 var message: List<Message> = messageViewModel.getSelected()
                 // Location is a list of Locations (Not statically typed due to import names conflicts)
@@ -113,7 +115,6 @@ class Title : Fragment() {
                     }
 
                     if (location_on) {
-                        getLastLocation()
 
                         var timeout = 0
 

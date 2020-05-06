@@ -197,7 +197,7 @@ class EditMessages : Fragment() {
 
     private fun checkTitle(inputVal: String): Boolean{
         var result = true
-        if(inputVal.length > 15 || inputVal.isBlank() || inputVal.isEmpty() ){
+        if(inputVal.length > 30 || inputVal.isBlank() || inputVal.isEmpty() ){
             result = false
         }
         return result

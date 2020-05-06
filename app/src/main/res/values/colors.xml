@@ -24,4 +24,6 @@
     <color name="theme_green1">#00EE1D</color>
 
     <color name="selected_green">#008B00</color>
+
+    <color name="paper">#fdf5e8</color>
 </resources>

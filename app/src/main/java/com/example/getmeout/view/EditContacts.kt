@@ -37,11 +37,14 @@ import kotlin.random.Random
 
 class EditContacts : Fragment(){
 
+    // Initialize the contact view model
     private lateinit var contactViewModel: ContactViewModel
 
+    // Strings for errors
     final val firstNameError : String = "Invalid First Name!"
     final val lastNameError : String = "Invalid Last Name!"
     final val phoneNumberError : String = "Invalid Phone Number!"
+
     var MY_PERMISSIONS_REQUEST_READ_CONTACTS: Int = 0
 
     override fun onCreateView(
@@ -52,13 +55,16 @@ class EditContacts : Fragment(){
         val binding = DataBindingUtil.inflate<FragmentEditContactsBinding>(inflater,
             R.layout.fragment_edit_contacts,container,false)
 
+
         val recyclerView = binding.contactsRecyclerview
         val contactAdapter = ContactAdapter(this.context!!)
+
         recyclerView.adapter = contactAdapter
         recyclerView.layoutManager = LinearLayoutManager(this.context!!)
 
         var delete_on = false
         var edit_on = false
+
 
         contactViewModel = ViewModelProvider(this).get(ContactViewModel::class.java)
         contactViewModel.getAll().observe(viewLifecycleOwner, Observer { contacts -> contacts?.let {contactAdapter.setContacts(it)}})
@@ -69,6 +75,7 @@ class EditContacts : Fragment(){
             }
         }
 
+
         binding.addContactBtn.setOnClickListener {
             addContact(contactViewModel)
         }
@@ -78,8 +85,8 @@ class EditContacts : Fragment(){
             edit_on = false
 
             if (delete_on) {
-                del_contact_btn.setTextColor(Color.parseColor("#ff0000"))
-                edit_contact_btn.setTextColor(Color.parseColor("#ffffff"))
+                del_contact_btn.setTextColor(Color.parseColor("#ff0000")) // Red
+                edit_contact_btn.setTextColor(Color.parseColor("#ffffff")) // White
                 contactAdapter.onItemClick = { contact ->
                     GlobalScope.launch {
                         contactViewModel.deleteByUid(contact.uid)
@@ -134,28 +141,30 @@ class EditContacts : Fragment(){
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null, null)
         var numLoops = 0
 
-        while (!cursor!!.isLast) {
-            cursor.moveToNext()
+        if (cursor == null || !cursor.moveToNext()) {
+            cursor!!.close()
+            return
+        }
+
+        while (!cursor!!.isAfterLast) {
 
             var name = ""
             var number = ""
 
-            if (cursor.isNull(5)) {
-                return
+            // Col 5 is display name
+            // Col 50 is phone number
+            if (cursor.getString(5) != null && cursor.getString(50) != null) {
+                name = cursor.getString(5)
+                number = cursor.getString(50).replace(Regex("""[- ]"""), "")
+                GlobalScope.launch {
+                    contactViewModel.insert(Contact(0, name, "", number, false))
+                }
             }
 
-            try {
-                if (cursor.getString(5) != null && cursor.getString(50) != null) {
-                    name = cursor.getString(5)
-                    number = cursor.getString(50).replace(Regex("""[- ]"""), "")
-                    GlobalScope.launch {
-                        contactViewModel.insert(Contact(0, name, "", number, false))
-                    }
-                }
-            } finally {
-                cursor.close()
-            }
+            cursor.moveToNext()
         }
+
+        cursor!!.close()
 
         // TEST LOOP FOR COLUMN NAMES.
         /*
@@ -221,7 +230,7 @@ class EditContacts : Fragment(){
         val phoneno = EditText(context)
 
         firstname.hint = "First Name"
-        lastname.hint = "Last Name"
+        lastname.hint = "Last Name (Optional)"
         phoneno.hint = "Phone Number"
 
         firstname.setText(pre_fname)
@@ -244,8 +253,6 @@ class EditContacts : Fragment(){
 
             if (!checkFirstName(input_fname)) {
                 popupMessage("Error", firstNameError)
-            } else if (!checkLastName(input_lname)) {
-                popupMessage("Error", lastNameError)
             } else if (!checkPhoneNum(input_phoneno)) {
                 popupMessage("Error", phoneNumberError)
             } else {
@@ -270,6 +277,7 @@ class EditContacts : Fragment(){
         return result
     }
 
+    // Optional - I don't think we need this anymore.
     private fun checkLastName(inputVal: String): Boolean{
         var result = true
         if(inputVal.length > 15 || inputVal.isBlank() || inputVal.isEmpty() ){
@@ -308,13 +316,13 @@ class EditContacts : Fragment(){
         dialog.show()
     }
 
-    // Checks to see if the you have the SEND_SMS Permission.
+    // Checks to see if the you have the Contacts Permission.
     // This will return TRUE if permission has been granted.
     fun checkContactsPermissions(): Boolean {
         return (ContextCompat.checkSelfPermission(this.context!!, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED)
     }
 
-    // This method requests the permission for SEND_SMS
+    // This method requests the permission for Contacts
     fun requestContactsPermissions() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this.activity!!,
                 Manifest.permission.READ_CONTACTS)) {
