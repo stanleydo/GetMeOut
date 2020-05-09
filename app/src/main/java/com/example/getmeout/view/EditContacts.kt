@@ -183,7 +183,7 @@ class EditContacts : Fragment(){
         val phoneno = EditText(context)
 
         firstname.hint = "First Name"
-        lastname.hint = "Last Name"
+        lastname.hint = "Last Name (Optional)"
         phoneno.hint = "Phone Number"
 
         val linLayout: LinearLayout = LinearLayout(context)
@@ -202,8 +202,6 @@ class EditContacts : Fragment(){
 
             if (!checkFirstName(input_fname)) {
                 popupMessage("Error", firstNameError)
-            } else if (!checkLastName(input_lname)) {
-                popupMessage("Error", lastNameError)
             } else if (!checkPhoneNum(input_phoneno)) {
                 popupMessage("Error", phoneNumberError)
             } else {

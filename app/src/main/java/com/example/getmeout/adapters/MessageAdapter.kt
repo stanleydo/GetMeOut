@@ -18,7 +18,9 @@ class MessageAdapter internal constructor(context: Context) : RecyclerView.Adapt
     final val txt_unselected_color = "#000000"
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
+
     private var messages: List<Message> = ArrayList()
+
     var onItemClick: ((Message) -> Unit)? = null
     var drawable: Drawable? = context.getDrawable(R.drawable.ic_check_circle_green_24dp)
 
