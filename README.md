@@ -2,3 +2,10 @@ The Get Me Out app is a new Android messaging app that is geared towards safely 
 
 This application was developed as part of a Software Engineering project at CSULA.
 Members include: Christopher Ortega, Andrew Vasquez, and Saul Rugama.
+
+** Known Bugs **
+- Importing contacts only works for devices running API 25
+- Duplicate entries are allowed
+- Contacts can be imported with parenthesis in the phone number, but contacts can not be added with parenthesis.
+- Location (as a google maps link) sometimes does not send
+- Possible memory leaks due to improper usage of cursor and/or coroutines.
