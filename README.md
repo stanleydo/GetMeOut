@@ -3,7 +3,7 @@
 This application was developed as part of a Software Engineering project at CSULA.
 Members include: Christopher Ortega, Andrew Vasquez, and Saul Rugama.
 
-
+![Get Me Out Demo](demo/Demo.gif)
 
 #### Known Bugs ####
 - Importing contacts only works for devices running API 25
