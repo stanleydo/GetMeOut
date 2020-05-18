@@ -3,9 +3,18 @@
 This application was developed as part of a Software Engineering project at CSULA.
 Members include: Christopher Ortega, Andrew Vasquez, and Saul Rugama.
 
+
+
 #### Known Bugs ####
 - Importing contacts only works for devices running API 25
 - Duplicate entries are allowed
 - Contacts can be imported with parenthesis in the phone number, but contacts can not be added with parenthesis.
 - Location (as a google maps link) sometimes does not send
 - Possible memory leaks due to improper usage of cursor and/or coroutines.
+- Notification problems when app does not have Contact/Location/SMS permissions.
+
+#### Considerations ####
+- Fake Calls
+- Reduced Location links (Using bit.ly or something)
+- Navbar
+- Delete All
