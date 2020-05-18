@@ -10,6 +10,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.ContactsContract.Contacts.CONTENT_LOOKUP_URI
+import android.provider.ContactsContract.Contacts.DISPLAY_NAME
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -153,6 +154,7 @@ class EditContacts : Fragment(){
 
             // Col 5 is display name
             // Col 50 is phone number
+//            var id = cursor.getString(cursor.getColumnIndex(ContactsContract.ContactsColumns.DISPLAY_NAME))
             if (cursor.getString(5) != null && cursor.getString(50) != null) {
                 name = cursor.getString(5)
                 number = cursor.getString(50).replace(Regex("""[- ]"""), "")
